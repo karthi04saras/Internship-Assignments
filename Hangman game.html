@@ -1,112 +1,115 @@
-<!DOCTYPE html>
-<!-- saved from url=(0039)https://github.com/karthi04saras/python -->
-<html lang="en" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark" data-a11y-animated-images="system" data-a11y-link-underlines="true" data-turbo-loaded=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">.turbo-progress-bar {
-  position: fixed;
-  display: block;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: #0076ff;
-  z-index: 2147483647;
-  transition:
-    width 300ms ease-out,
-    opacity 150ms 150ms ease-in;
-  transform: translate3d(0, 0, 0);
-}
-</style><style>
-:root {
-  --fontStack-monospace: "Monaspace Neon", ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace !important;
-}
-</style>
+import random
 
+def get_word():
+    words = ["python", "hangman", "developer", "laptop", "keyboard", "programming", "engineer"]
+    return random.choice(words).lower()
 
+def display_hangman(tries):
+    stages = [
+        """
+           ------
+           |    |
+           |    O
+           |   /|\\
+           |   / \\
+           |
+        """,
+        """
+           ------
+           |    |
+           |    O
+           |   /|\\
+           |   / 
+           |
+        """,
+        """
+           ------
+           |    |
+           |    O
+           |   /|\\
+           |    
+           |
+        """,
+        """
+           ------
+           |    |
+           |    O
+           |   /|
+           |    
+           |
+        """,
+        """
+           ------
+           |    |
+           |    O
+           |    |
+           |    
+           |
+        """,
+        """
+           ------
+           |    |
+           |    O
+           |    
+           |    
+           |
+        """,
+        """
+           ------
+           |    |
+           |    
+           |    
+           |    
+           |
+        """
+    ]
+    return stages[tries]
 
+def play_game():
+    word = get_word()
+    word_letters = set(word)  # Unique letters in the word
+    guessed_letters = set()   # Correct guesses
+    guessed = set()           # All guessed letters
+    tries = 6                 # Total incorrect tries allowed
 
-  
-    
-  
-  
-  
-  
-  
-  
+    print("🎉 Welcome to Hangman!")
+    print(display_hangman(tries))
+    print("_ " * len(word))
 
-  
+    while tries > 0 and word_letters:
+        guess = input("🔤 Guess a letter: ").lower()
 
+        if not guess.isalpha() or len(guess) != 1:
+            print("❌ Invalid input. Please enter a single letter.")
+            continue
 
-  <link crossorigin="anonymous" media="all" rel="stylesheet" href="./hangman_files/light-d1334f2b22bf.css"><link crossorigin="anonymous" media="all" rel="stylesheet" href="./hangman_files/dark-f73a069fd33e.css"><link data-color-theme="light_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_high_contrast-f695a361c6b2.css"><link data-color-theme="light_colorblind" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_colorblind-367eb9a4565a.css"><link data-color-theme="light_colorblind_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_colorblind_high_contrast-183adc0db479.css"><link data-color-theme="light_tritanopia" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_tritanopia-2ddc677c041d.css"><link data-color-theme="light_tritanopia_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_tritanopia_high_contrast-649962a5702a.css"><link data-color-theme="dark_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_high_contrast-3a0d87f72ad4.css"><link data-color-theme="dark_colorblind" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_colorblind-b17a8392e6c4.css"><link data-color-theme="dark_colorblind_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_colorblind_high_contrast-e9ff47cedc2b.css"><link data-color-theme="dark_tritanopia" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_tritanopia-a1cc7dba9f73.css"><link data-color-theme="dark_tritanopia_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_tritanopia_high_contrast-6c4dd39e2b0f.css"><link data-color-theme="dark_dimmed" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_dimmed-55459b36aa6d.css"><link data-color-theme="dark_dimmed_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_dimmed_high_contrast-9a0ef6e40ed3.css">
+        if guess in guessed:
+            print("⚠️ You already guessed that letter.")
+            continue
 
-    <style type="text/css">
-      :root {
-        --tab-size-preference: 8;
-      }
+        guessed.add(guess)
 
-      pre, code {
-        tab-size: var(--tab-size-preference);
-      }
-    </style>
+        if guess in word_letters:
+            word_letters.remove(guess)
+            guessed_letters.add(guess)
+            print("✅ Good guess!")
+        else:
+            tries -= 1
+            print("❌ Wrong guess!")
+        
+        print(display_hangman(tries))
 
-    <link crossorigin="anonymous" media="all" rel="stylesheet" href="./hangman_files/primer-primitives-dc7ca6859caf.css">
-    <link crossorigin="anonymous" media="all" rel="stylesheet" href="./hangman_files/primer-e11b50dc0d94.css">
-    <link crossorigin="anonymous" media="all" rel="stylesheet" href="./hangman_files/global-208b03e93e68.css">
-    <link crossorigin="anonymous" media="all" rel="stylesheet" href="./hangman_files/github-709c905d887a.css">
-  <link crossorigin="anonymous" media="all" rel="stylesheet" href="./hangman_files/repository-b58e401b73ae.css">
+        word_display = [letter if letter in guessed_letters else '_' for letter in word]
+        print("📝 Word: ", ' '.join(word_display))
 
-  
+    if not word_letters:
+        print(f"🎉 Congratulations! You guessed the word: '{word}'")
+    else:
+        print(f"💀 Game Over! The word was: '{word}'")
 
-
-  <script type="application/json" id="client-env">{"locale":"en","featureFlags":["alternate_user_config_repo","api_insights_show_missing_data_banner","attestations_filtering","attestations_sorting","billingplatform_copilot_premium_sku","client_version_header","code_scanning_security_configuration_ternary_state","codespaces_prebuild_region_target_update","contact_requests_implicit_opt_in","contentful_lp_copilot_extensions","contentful_lp_flex_features","contentful_lp_footnotes","copilot_chat_attach_images","copilot_chat_attach_multiple_images","copilot_chat_disable_model_picker_while_streaming","copilot_chat_group_notifications","copilot_chat_opening_thread_switch","copilot_chat_reduce_quota_checks","copilot_chat_vision_in_claude","copilot_chat_vision_skip_thread_create","copilot_chat_wholearea_dd","copilot_coding_agent_task_creation_banner","copilot_custom_copilots_feature_preview","copilot_custom_copilots_images","copilot_duplicate_thread","copilot_free_to_paid_telem","copilot_ftp_hyperspace_upgrade_prompt","copilot_ftp_settings_upgrade","copilot_ftp_upgrade_to_pro_from_models","copilot_ftp_your_copilot_settings","copilot_immersive_agent_branch_selection","copilot_immersive_draft_issue_template_form_ui","copilot_immersive_structured_model_picker","copilot_issue_list_show_more","copilot_markdown_image_allow_list","copilot_no_floating_button","copilot_premium_request_quotas","copilot_read_shared_conversation","copilot_share_active_subthread","copilot_spaces_inline_edit_description","copilot_spaces_input_menu_select","copilot_spaces_upsert_reload_in_background","copilot_spark_allow_empty_commit","copilot_spark_single_user_iteration","copilot_spark_use_billing_headers","copilot_spark_write_iteration_history_to_git","copilot_task_oriented_assistive_prompts","copilot_workbench_agent_seed_tool","copilot_workbench_cache","copilot_workbench_connection_reload_banner","copilot_workbench_preview_analytics","copilot_workbench_ratelimit_fallback","copilot_workbench_refresh_on_wsod","copilot_workbench_synthetic_generation","custom_copilots_128k_window","custom_copilots_capi_mode","custom_copilots_file_uploads","direct_to_salesforce","dotcom_chat_client_side_skills","failbot_report_error_react_apps_on_page","fgpat_permissions_selector_redesign","ghost_pilot_confidence_truncation_25","ghost_pilot_confidence_truncation_40","hpc_improve_dom_insertion_observer","insert_before_patch","issue_fields_report_usage","issues_catch_non_json_graphql_response","issues_label_search_url","issues_preserve_tokens_in_urls","issues_react_blur_item_picker_on_close","issues_react_bots_timeline_pagination","issues_react_create_milestone","issues_react_duplicate_issue","issues_react_include_bots_in_pickers","issues_react_prohibit_title_fallback","issues_react_remove_placeholders","issues_template_picker_redirect","kb_semantic_api_migration","lifecycle_label_name_updates","link_contact_sales_swp_marketo","marketing_fullstory_sampling","marketing_pages_search_explore_provider","memex_mwl_filter_field_delimiter","memex_roadmap_drag_style","nonreporting_relay_graphql_status_codes","primer_react_segmented_control_tooltip","primer_react_select_panel_with_modern_action_list","remove_child_patch","repository_suggester_elastic_search","sample_network_conn_type","scheduled_reminders_updated_limits","site_copilot_plans_emphasize_pro","site_homepage_contentful","site_msbuild_hide_integrations","site_msbuild_launch","site_msbuild_webgl_hero","spark_commit_on_default_branch","spark_sync_repository_after_iteration","swp_enterprise_contact_form","use_paginated_org_picker_cost_center_form","use_paginated_repo_picker_cost_center_form","viewscreen_sandbox","workbench_default_sonnet4","workbench_store_readonly"],"login":"karthi04saras","copilotApiOverrideUrl":null}</script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/wp-runtime-ddb27cd72c42.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_oddbird_popover-polyfill_dist_popover-fn_js-a8c266e5f126.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_mini-throttle_dist_index_js-node_modules_stacktrace-parser_dist_s-1d3d52-babac9434833.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/ui_packages_failbot_failbot_ts-992dcf80dabf.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/environment-17084f3f370f.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_primer_behaviors_dist_esm_index_mjs-c44edfed7f0d.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_selector-observer_dist_index_esm_js-cdf2757bd188.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_relative-time-element_dist_index_js-5913bc24f35d.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_auto-complete-element_dist_index_js-node_modules_github_catalyst_-8e9f78-c1e2fb329866.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_text-expander-element_dist_index_js-e50fb7a5fe8c.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_filter-input-element_dist_index_js-node_modules_github_remote-inp-b5f1d7-514a92c925f0.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_markdown-toolbar-element_dist_index_js-6a8c7d9a08fe.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_file-attachment-element_dist_index_js-node_modules_primer_view-co-f03a40-c631b99b0f08.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/github-elements-6f8fcdbbf55a.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/element-registry-fa295cd1df7e.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_braintree_browser-detection_dist_browser-detection_js-node_modules_githu-bb80ec-34c4b68b1dd3.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_lit-html_lit-html_js-b93a87060d31.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_morphdom_dist_morphdom-esm_js-300e8e4e0414.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_turbo_dist_turbo_es2017-esm_js-595819d3686f.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_remote-form_dist_index_js-node_modules_delegated-events_dist_inde-893f9f-5f044d8dcee3.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_quote-selection_dist_index_js-node_modules_github_session-resume_-c39857-68019bebf97d.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/ui_packages_updatable-content_updatable-content_ts-19a9ffc8367b.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/app_assets_modules_github_behaviors_task-list_ts-app_assets_modules_github_sso_ts-ui_packages-900dde-f953ddf42948.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/app_assets_modules_github_sticky-scroll-into-view_ts-c9618dd6662a.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/app_assets_modules_github_behaviors_ajax-error_ts-app_assets_modules_github_behaviors_include-d0d0a6-a7da4270c5f4.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/app_assets_modules_github_behaviors_commenting_edit_ts-app_assets_modules_github_behaviors_ht-83c235-567e0f340e27.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/behaviors-625d7495b728.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_delegated-events_dist_index_js-node_modules_github_catalyst_lib_index_js-ea8eaa-a4bd0b8e9717.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/notifications-global-ddd47578369b.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_mini-throttle_dist_index_js-node_modules_virtualized-list_es_inde-5cfb7e-03a3356911e6.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_filter-input-element_dist_index_js-node_modules_github_remote-inp-3eebbd-c8d976843cc9.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_mini-throttle_dist_decorators_js-node_modules_delegated-events_di-e161aa-f6ae1abe18dd.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_file-attachment-element_dist_index_js-node_modules_github_remote--3c9c82-aa5ff674466d.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/app_assets_modules_github_ref-selector_ts-c2ba82cb11dd.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/repositories-30fd90fdf7a8.js.download" defer="defer"></script>
-  
-  
-
-
-
-
-
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_dompurify_dist_purify_es_mjs-7457ebdd1a1f.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/vendors-node_modules_github_hydro-analytics-client_dist_analytics-client_js-node_modules_gith-d2d5b7-d1ead38b2474.js.download" defer="defer"></script>
-
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/ui_packages_document-metadata_document-metadata_ts-ui_packages_fetch-headers_fetch-headers_ts-57e0e0-bed68ec00644.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/ui_packages_app-uuid_app-uuid_ts-ui_packages_custom-properties-editing_hooks_use-edit-custom--a49d3b-620d79652d6a.js.download" defer="defer"></script>
-<script crossorigin="anonymous" type="application/javascript" src="./hangman_files/repo-creation-ba4eac47a3cc.js.download" defer="defer"></script>
-<link crossorigin="anonymous" media="all" rel="stylesheet" href="./hangman_files/primer-react.260d30274859410b0337.module.css">
-<link crossorigin="anonymous" media="all" rel="stylesheet" href="./hangman_files/repo-creation.0208d72def095802160e.module.css">
-
+# Run the game
+if __name__ == "__main__":
+    play_game()
 
   
 
